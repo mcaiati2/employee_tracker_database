@@ -1,13 +1,13 @@
 import inquirer from 'inquirer';
-import { getAllDepartments, getAllEmployees, createDepartment } from './query.js';
+import { getAllDepartments, getAllEmployees, getAllRoles, createDepartment } from './query.js';
 
 let showWelcome = false;
 
 
-export async function addEmployee() {
+export async function createDepartment() {
 
     const employeesArray = await getAllEmployees();
-    const { user_id, name, address } = await inquirer.prompt([
+    const { department_name, department_id } = await inquirer.prompt([
         {
             message: 'Please select the owner of the shop',
             name: 'user_id',
@@ -31,7 +31,7 @@ export async function addEmployee() {
         }
     ]);
 
-    await createDepartment(user_id, name, address);
+    await createDepartment(department_name, department_id);
 }
 
 export async function showAllDepartments() {
@@ -39,8 +39,11 @@ export async function showAllDepartments() {
     console.table(departmentRowsArray);
 
 }
-// 11:05 AM more complicated object method
 
+export async function showAllRoles() {
+    const rolesRowsArray = await getAllRoles();
+    console.table(rolesRowsArray);
+}
 export async function showMainMenu() {
     if (!showWelcome) {
         console.log('Welcome to the Employee Info Tracker');
@@ -53,13 +56,29 @@ export async function showMainMenu() {
         type: 'list',
         choices: [
             {
-                name: 'Show All Departments',
+                name: 'View all departments',
                 value: showAllDepartments,
+            },
+            {
+                name: 'View all roles',
+                value: viewRoles,
+            },
+            {
+                name: 'View all employees',
+                value: viewEmployees,
+            },
+            {
+                name: 'Add a role',
+                value: addRole,
             },
             {
                 name: 'Add Employee',
                 value: addEmployee
             },
+            {
+                name: 'Update employee role',
+                value: updateEmployeeRole
+            }
             {
                 name: 'Quit',
                 value: 0

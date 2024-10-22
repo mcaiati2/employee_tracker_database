@@ -3,9 +3,9 @@ import client from '../config/connection.js';
 export async function getAllDepartments() {
     const sql = `
         SELECT
-        shops.id AS shop_id,
-        name AS shop_name,
-        address AS shop_address,
+        departments.id AS department_id,
+        name AS department_name,
+       
         users.id AS user_id,
         CONCAT(users.first_name, ' ', users.last_name) AS user_name,
         users.email AS user_email,
@@ -44,7 +44,7 @@ export async function getAllEmployees() {
     return rows;
 }
 
-export async function createDepartment(user_id: number, name: string, address: string) {
+export async function createDepartment(departmentName: string, departmentId: number) {
     const sql = `
     INSERT INTO shops (name, address, user_id) VALUES ($1, $2, $3)
     `;
