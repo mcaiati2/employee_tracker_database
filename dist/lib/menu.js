@@ -1,11 +1,7 @@
 import inquirer from 'inquirer';
 import { getAllDepartments, getAllEmployees, createDepartment } from './query.js';
-
 let showWelcome = false;
-
-
 export async function addEmployee() {
-
     const employeesArray = await getAllEmployees();
     const { user_id, name, address } = await inquirer.prompt([
         {
@@ -30,23 +26,18 @@ export async function addEmployee() {
             type: 'input'
         }
     ]);
-
     await createDepartment(user_id, name, address);
 }
-
 export async function showAllDepartments() {
     const departmentRowsArray = await getAllDepartments();
     console.table(departmentRowsArray);
-
 }
 // 11:05 AM more complicated object method
-
 export async function showMainMenu() {
     if (!showWelcome) {
         console.log('Welcome to the Employee Info Tracker');
         showWelcome = true;
     }
-
     const { optionFunction } = await inquirer.prompt({
         message: 'Please select an option',
         name: 'optionFunction',
@@ -63,7 +54,8 @@ export async function showMainMenu() {
             {
                 name: 'Quit',
                 value: 0
-            }]
+            }
+        ]
     });
     if (!optionFunction) {
         console.log('\nThanks for using the Employee Tracker app!');
@@ -72,3 +64,4 @@ export async function showMainMenu() {
     await optionFunction();
     showMainMenu();
 }
+//# sourceMappingURL=menu.js.map

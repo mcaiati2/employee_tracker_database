@@ -1,5 +1,4 @@
 import client from '../config/connection.js';
-
 export async function getAllDepartments() {
     const sql = `
         SELECT
@@ -24,13 +23,9 @@ export async function getAllDepartments() {
     LEFT JOIN users AS managers
         ON users.manager_id = managers.id;
     `;
-
-    const {rows} = await client.query(sql);
-
-
+    const { rows } = await client.query(sql);
     return rows;
 }
-
 export async function getAllEmployees() {
     const sql = `
     SELECT 
@@ -38,17 +33,13 @@ export async function getAllEmployees() {
         CONCAT(first_name, ' ', last_name) AS user_name
     FROM users
     `;
-
-    const {rows} = await client.query(sql);
-
+    const { rows } = await client.query(sql);
     return rows;
 }
-
-export async function createDepartment(user_id: number, name: string, address: string) {
+export async function createDepartment(user_id, name, address) {
     const sql = `
     INSERT INTO shops (name, address, user_id) VALUES ($1, $2, $3)
     `;
-
     await client.query(sql, [name, address, user_id]); //prepared state
-
 }
+//# sourceMappingURL=query.js.map
