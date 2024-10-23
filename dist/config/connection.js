@@ -3,7 +3,7 @@ const { Client } = pg;
 const client = new Client({
     user: 'postgres',
     password: 'pass',
-    database: 'winery_app_db'
+    database: 'employee_tracker_db'
 });
 await client.connect();
 export default client;

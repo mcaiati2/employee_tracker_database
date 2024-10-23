@@ -12,13 +12,13 @@ SELECT
     employees.manager_id,
 
     roles.id AS role_id,
-    roles.job_title AS role_job_title,
+    roles.title AS role_job_title, -- Ensure this matches the actual column name
     roles.salary AS role_salary
 
 FROM roles
 JOIN departments
     ON roles.department_id = departments.id
 JOIN employees
-    ON roles.user_id = employees.id
+    ON roles.id = employees.role_id -- Ensure this matches the actual column name
 LEFT JOIN employees AS managers
     ON employees.manager_id = managers.id;
