@@ -1,15 +1,12 @@
--- Drop existing tables if they exist
 DROP TABLE IF EXISTS employees;
 DROP TABLE IF EXISTS roles;
 DROP TABLE IF EXISTS departments;
 
--- Create departments table
 CREATE TABLE departments (
     id SERIAL PRIMARY KEY,
     name VARCHAR(30) UNIQUE NOT NULL
 );
 
--- Create roles table
 CREATE TABLE roles (
     id SERIAL PRIMARY KEY,
     job_title VARCHAR(30) UNIQUE NOT NULL,
@@ -20,7 +17,6 @@ CREATE TABLE roles (
         ON UPDATE CASCADE
 );
 
--- Create employees table
 CREATE TABLE employees (
     id SERIAL PRIMARY KEY,
     first_name VARCHAR(30) NOT NULL,
