@@ -1,5 +1,5 @@
 import inquirer from 'inquirer';
-import { getAllDepartments, getAllEmployees, getAllRoles, getAllManagers, createDepartment, createRole, createEmployee, updateEmployeeRoleInDB } from './query.js';
+import { getAllDepartments, getAllEmployees, getAllRoles, createDepartment, createRole, createEmployee, updateEmployeeRoleInDB } from './query.js';
 
 let showWelcome = false;
 
@@ -50,11 +50,11 @@ export async function addEmployee() {
         name: role.job_title,
         value: role.id
     }));
-    const managers = await getAllManagers();
+    const managers = await getAllEmployees();
 
-    const managerChoices = managers.map(manager => ({
-        name: manager.manager_name,
-        value: manager.id
+    const managerChoices = managers.map(employee => ({
+        name: employee.employee_name,
+        value: employee.id
     }));
 
     managerChoices.unshift({ name: 'None', value: null });
@@ -88,18 +88,17 @@ export async function addEmployee() {
 
 export async function updateEmployeeRole() {
     const employeeDataArray = await getAllEmployees();
-    const roleDataArray = await getAllRoles();
 
     const employeeChoices = employeeDataArray.map(employee => ({
         name: `${employee.first_name} ${employee.last_name}`,
         value: employee.id
     }));
 
-    const roleChoices = roleDataArray.map(role => ({
-        name: role.title,
-        value: role.id
+    const roles = await getAllRoles();
+    const roleChoices = roles.map(role => ({
+        name: role.job_title,
+        value: role.id 
     }));
-
     const { employeeId } = await inquirer.prompt([
         {
             type: 'list',

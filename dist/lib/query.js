@@ -10,25 +10,15 @@ export async function getAllEmployees() {
     const sql = `
     SELECT 
         employees.id, 
-        employees.first_name, 
-        employees.last_name, 
-        CONCAT(employees.first_name, ' ', employees.last_name) AS user_name,
+        CONCAT(employees.first_name, ' ', employees.last_name) AS employee_name,
         roles.job_title AS job_title,
         departments.name AS department_name,
-        CONCAT(managers.first_name, ' ', managers.last_name) AS manager_name
+        CONCAT(managers.first_name, ' ', managers.last_name) AS manager_name,
+        employees.manager_id
     FROM employees
     JOIN roles ON employees.role_id = roles.id
     JOIN departments ON roles.department_id = departments.id
     LEFT JOIN employees AS managers ON employees.manager_id = managers.id
-    `;
-    const { rows } = await client.query(sql);
-    return rows;
-}
-export async function getAllManagers() {
-    const sql = `
-    SELECT id, CONCAT(first_name, ' ', last_name) AS manager_name
-    FROM employees
-    WHERE manager_id IS NULL
     `;
     const { rows } = await client.query(sql);
     return rows;
