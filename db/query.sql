@@ -7,7 +7,7 @@ SELECT
     employees.id AS employee_id,
     CONCAT(employees.first_name, ' ', employees.last_name) AS employee_name,
     CONCAT(managers.first_name, ' ', managers.last_name) AS manager,
-    roles.title AS job_title,
+    roles.job_title AS job_title,
     roles.salary,
     employees.manager_id
 
