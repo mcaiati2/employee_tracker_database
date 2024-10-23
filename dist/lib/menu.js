@@ -4,7 +4,7 @@ let showWelcome = false;
 export async function addDepartment() {
     const { department_name } = await inquirer.prompt([
         {
-            message: 'Enter the name of the department you\'d like to add',
+            message: 'Enter the Name of the Department You\'d Like to Add',
             name: 'department_name',
             type: 'input'
         },
@@ -19,17 +19,17 @@ export async function addRole() {
     }));
     const { job_title, department_id, salary } = await inquirer.prompt([
         {
-            message: 'Enter the name of the role:',
+            message: 'Enter the Name of the Role You\'d Like to Add:',
             name: 'job_title',
             type: 'input',
         },
         {
-            message: 'Enter the salary for the role:',
+            message: 'Enter the Salary for the Role:',
             name: 'salary',
             type: 'input'
         },
         {
-            message: 'Enter the department for the role:',
+            message: 'Choose the Department for the Role:',
             name: 'department_id',
             type: 'list',
             choices: departmentChoices
@@ -51,23 +51,23 @@ export async function addEmployee() {
     managerChoices.unshift({ name: 'None', value: null });
     const { first_name, last_name, role_id, manager_id } = await inquirer.prompt([
         {
-            message: 'Enter the employee\'s first name:',
+            message: 'Enter the Employee\'s First Name:',
             name: 'first_name',
             type: 'input'
         },
         {
-            message: 'Enter the employee\'s last name:',
+            message: 'Enter the Employee\'s Last Name:',
             name: 'last_name',
             type: 'input'
         },
         {
-            message: 'Enter the employee\'s role:',
+            message: 'Select the Employee\'s Role:',
             name: 'role_id',
             type: 'list',
             choices: roleChoices
         },
         {
-            message: 'Enter the employee\'s manager:',
+            message: 'Select the Employee\'s Manager:',
             name: 'manager_id',
             type: 'list',
             choices: managerChoices
@@ -90,7 +90,7 @@ export async function updateEmployeeRole() {
         {
             type: 'list',
             name: 'employeeId',
-            message: 'Which employee would you like to update the role for?',
+            message: 'Choose the Employee That You\'d Like to Update the Role For',
             choices: employeeChoices
         }
     ]);
@@ -98,7 +98,7 @@ export async function updateEmployeeRole() {
         {
             type: 'list',
             name: 'roleId',
-            message: 'Select the new role for the employee:',
+            message: 'Select the New Role For the Employee:',
             choices: roleChoices
         }
     ]);
