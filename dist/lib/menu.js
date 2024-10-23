@@ -1,5 +1,5 @@
 import inquirer from 'inquirer';
-import { getAllDepartments, getAllEmployees, getAllRoles, createDepartment, createRole, createEmployee, updateEmployeeRoleInDB } from './query.js';
+import { getAllDepartments, getAllEmployees, getAllRoles, getAllManagers, createDepartment, createRole, createEmployee, updateEmployeeRoleInDB } from './query.js';
 let showWelcome = false;
 export async function addDepartment() {
     const { department_name } = await inquirer.prompt([
@@ -38,6 +38,17 @@ export async function addRole() {
     await createRole(job_title, department_id, salary);
 }
 export async function addEmployee() {
+    const roles = await getAllRoles();
+    const roleChoices = roles.map(role => ({
+        name: role.job_title,
+        value: role.id
+    }));
+    const managers = await getAllManagers();
+    const managerChoices = managers.map(manager => ({
+        name: manager.manager_name,
+        value: manager.id
+    }));
+    managerChoices.unshift({ name: 'None', value: null });
     const { first_name, last_name, role_id, manager_id } = await inquirer.prompt([
         {
             message: 'Enter the employee\'s first name:',
@@ -52,12 +63,14 @@ export async function addEmployee() {
         {
             message: 'Enter the employee\'s role:',
             name: 'role_id',
-            type: 'input'
+            type: 'list',
+            choices: roleChoices
         },
         {
             message: 'Enter the employee\'s manager:',
             name: 'manager_id',
-            type: 'input'
+            type: 'list',
+            choices: managerChoices
         }
     ]);
     await createEmployee(first_name, last_name, role_id, manager_id);

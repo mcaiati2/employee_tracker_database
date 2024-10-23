@@ -31,11 +31,18 @@ export async function getAllEmployees() {
     return rows;
 }
 
-export async function getAllRoles() {
+export async function getAllManagers() {
     const sql = `
-    SELECT * FROM roles
+    SELECT id, CONCAT(first_name, ' ', last_name) AS manager_name
+    FROM employees
+    WHERE manager_id IS NULL
     `;
+    const { rows } = await client.query(sql);
+    return rows;
+}
 
+export async function getAllRoles() {
+    const sql = `SELECT id, job_title FROM roles;`;
     const result = await client.query(sql);
     return result.rows;
 }
