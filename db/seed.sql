@@ -6,7 +6,7 @@ INSERT INTO departments (name) VALUES
 ('Sales');
 
 -- Create roles
-INSERT INTO roles (title, salary, department_id) VALUES 
+INSERT INTO roles (job_title, salary, department_id) VALUES 
 ('Software Engineer', 80000, 1),
 ('HR Manager', 60000, 2),
 ('Marketing Specialist', 50000, 3),

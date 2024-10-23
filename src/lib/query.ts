@@ -20,7 +20,7 @@ export async function getAllEmployees() {
         employees.first_name, 
         employees.last_name, 
         CONCAT(employees.first_name, ' ', employees.last_name) AS user_name,
-        roles.title AS job_title,
+        roles.job_title AS job_title,
         departments.name AS department_name,
         CONCAT(managers.first_name, ' ', managers.last_name) AS manager_name
     FROM employees
@@ -52,7 +52,7 @@ export async function createDepartment(departmentName: string) {
 
 }
 
-export async function createRole(job_title: string, department_id: number, salary: number) {
+export async function createRole(job_title: string, department_id: string, salary: number) {
     const sql = `
     INSERT INTO roles (job_title, department_id, salary) VALUES ($1, $2, $3)
     `;
@@ -61,18 +61,16 @@ export async function createRole(job_title: string, department_id: number, salar
 }
 
 
-export async function createEmployee(first_name: string, last_name: string, role_id: number, manager_id: number) {
+export async function createEmployee(first_name: string, last_name: string, role_id: string, manager_id: string) {
     const sql = `
-    INSERT INTO employees (first_name, last_name, job_title, department_id, manager_id)
-    SELECT $1, $2, job_title, department_id, $4
-    FROM roles
-    WHERE id = $3
+    INSERT INTO employees (first_name, last_name, role_id, manager_id)
+    VALUES ($1, $2, $3, $4)
     `;
 
     await client.query(sql, [first_name, last_name, role_id, manager_id]);
 }
 
-export async function updateEmployeeRoleInDB(employeeId: number, roleId: number) {
+export async function updateEmployeeRoleInDB(employeeId: string, roleId: string) {
     const sql = `
     UPDATE employees
     SET role_id = $1

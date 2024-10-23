@@ -16,7 +16,7 @@ export async function getAllEmployees() {
         employees.first_name, 
         employees.last_name, 
         CONCAT(employees.first_name, ' ', employees.last_name) AS user_name,
-        roles.title AS job_title,
+        roles.job_title AS job_title,
         departments.name AS department_name,
         CONCAT(managers.first_name, ' ', managers.last_name) AS manager_name
     FROM employees
@@ -48,10 +48,8 @@ export async function createRole(job_title, department_id, salary) {
 }
 export async function createEmployee(first_name, last_name, role_id, manager_id) {
     const sql = `
-    INSERT INTO employees (first_name, last_name, job_title, department_id, manager_id)
-    SELECT $1, $2, job_title, department_id, $4
-    FROM roles
-    WHERE id = $3
+    INSERT INTO employees (first_name, last_name, role_id, manager_id)
+    VALUES ($1, $2, $3, $4)
     `;
     await client.query(sql, [first_name, last_name, role_id, manager_id]);
 }
