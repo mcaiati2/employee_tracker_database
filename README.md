@@ -22,14 +22,15 @@ npm i pg
 
 
 ## Usage
+
+Video Walkthrough can be found [!here](https://drive.google.com/file/d/1jhjqcJIF4DKjg5FXgH1h6T3m4VYIDvIg/view?usp=sharing)
+
 To start the application, type npm start into your terminal. Here is a screenshot of how the menu prompt will look.
 <img src="./images/main-menu.png" alt="Main Menu" width=600>
 
 If you'd like to view existing departments, roles, or employees, you can select the corresponding option. You will then see the relevant information for the option you selected. Screenshot can be seen below for further reference:
-<img src="./images/view-departments.png" alt="View Departments" width=500>
-
 If you'd like to add a role to your database, choose the "Add a role option". You will be prompted to add the name of the role, the salary information, and the corresponding department. Please see the screenshot below for an example.
-<img src="./images/add-role.png" alt="Add New Role" width=600>
+<img src="./images/departments-existing.png" alt="Add New Role" width=600>
 
 To add a new employee, chose Add Employee from the list. You will be prompted to enter the employee's information, as shown in the screenshot below:
 <img src="./images/add-new-employee.png" alt="Add New Employee" width=600>
