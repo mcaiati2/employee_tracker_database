@@ -87,10 +87,10 @@ export async function addEmployee() {
 }
 
 export async function updateEmployeeRole() {
-    const employeeDataArray = await getAllEmployees();
+    const employeeData = await getAllEmployees();
 
-    const employeeChoices = employeeDataArray.map(employee => ({
-        name: `${employee.first_name} ${employee.last_name}`,
+    const employeeChoices = employeeData.map(employee => ({
+        name: employee.employee_name,
         value: employee.id
     }));
 

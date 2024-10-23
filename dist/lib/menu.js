@@ -76,9 +76,9 @@ export async function addEmployee() {
     await createEmployee(first_name, last_name, role_id, manager_id);
 }
 export async function updateEmployeeRole() {
-    const employeeDataArray = await getAllEmployees();
-    const employeeChoices = employeeDataArray.map(employee => ({
-        name: `${employee.first_name} ${employee.last_name}`,
+    const employeeData = await getAllEmployees();
+    const employeeChoices = employeeData.map(employee => ({
+        name: employee.employee_name,
         value: employee.id
     }));
     const roles = await getAllRoles();
