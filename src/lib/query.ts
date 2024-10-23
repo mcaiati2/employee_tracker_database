@@ -3,30 +3,12 @@ import client from '../config/connection.js';
 export async function getAllDepartments() {
     const sql = `
         SELECT
-        departments.id AS department_id,
-        name AS department_name,
-       
-        users.id AS user_id,
-        CONCAT(users.first_name, ' ', users.last_name) AS user_name,
-        users.email AS user_email,
-        CONCAT(managers.first_name, ' ', managers.last_name) AS manager,
-        wines.id AS wine_id,
-        brand AS wine_name,
-        type AS wine_type,
-        region AS wine_region,
-        price AS wine_price
-
-    FROM shops
-    JOIN users
-        ON shops.user_id = users.id
-    LEFT JOIN wines
-        ON shops.id = wines.shop_id
-    LEFT JOIN users AS managers
-        ON users.manager_id = managers.id;
+            departments.id AS department_id,
+            departments.name AS department_name
+        FROM departments;
     `;
 
-    const {rows} = await client.query(sql);
-
+    const { rows } = await client.query(sql);
 
     return rows;
 }
@@ -34,21 +16,68 @@ export async function getAllDepartments() {
 export async function getAllEmployees() {
     const sql = `
     SELECT 
-        id, 
-        CONCAT(first_name, ' ', last_name) AS user_name
-    FROM users
+        employees.id, 
+        employees.first_name, 
+        employees.last_name, 
+        CONCAT(employees.first_name, ' ', employees.last_name) AS user_name,
+        roles.title AS job_title,
+        departments.name AS department_name,
+        CONCAT(managers.first_name, ' ', managers.last_name) AS manager_name
+    FROM employees
+    JOIN roles ON employees.role_id = roles.id
+    JOIN departments ON roles.department_id = departments.id
+    LEFT JOIN employees AS managers ON employees.manager_id = managers.id
     `;
 
-    const {rows} = await client.query(sql);
+    const { rows } = await client.query(sql);
 
     return rows;
 }
 
-export async function createDepartment(departmentName: string, departmentId: number) {
+export async function getAllRoles() {
     const sql = `
-    INSERT INTO shops (name, address, user_id) VALUES ($1, $2, $3)
+    SELECT * FROM roles
     `;
 
-    await client.query(sql, [name, address, user_id]); //prepared state
+    const result = await client.query(sql);
+    return result.rows;
+}
 
+export async function createDepartment(departmentName: string) {
+    const sql = `
+    INSERT INTO departments (name) VALUES ($1)
+    `;
+
+    await client.query(sql, [departmentName]);
+
+}
+
+export async function createRole(job_title: string, department_id: number, salary: number) {
+    const sql = `
+    INSERT INTO roles (job_title, department_id, salary) VALUES ($1, $2, $3)
+    `;
+
+    await client.query(sql, [job_title, department_id, salary]);
+}
+
+
+export async function createEmployee(first_name: string, last_name: string, role_id: number, manager_id: number) {
+    const sql = `
+    INSERT INTO employees (first_name, last_name, job_title, department_id, manager_id)
+    SELECT $1, $2, job_title, department_id, $4
+    FROM roles
+    WHERE id = $3
+    `;
+
+    await client.query(sql, [first_name, last_name, role_id, manager_id]);
+}
+
+export async function updateEmployeeRoleInDB(employeeId: number, roleId: number) {
+    const sql = `
+    UPDATE employees
+    SET role_id = $1
+    WHERE id = $2
+    `;
+
+    await client.query(sql, [roleId, employeeId]);
 }

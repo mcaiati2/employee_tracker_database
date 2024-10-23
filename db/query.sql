@@ -1,23 +1,24 @@
-\c winery_app_db;
+\c employee_tracker_db;
 
 SELECT
     departments.id AS department_id,
-    name AS department_name,
+    departments.name AS department_name,
     
-    users.id AS user_id,
-    CONCAT(users.first_name, ' ', users.last_name) AS user_name,
-    users.email AS user_email,
+    employees.id AS employee_id,
+    CONCAT(employees.first_name, ' ', employees.last_name) AS employee_name,
     CONCAT(managers.first_name, ' ', managers.last_name) AS manager,
-    wines.id AS wine_id,
-    brand AS wine_name,
-    type AS wine_type,
-    region AS wine_region,
-    price AS wine_price
+    employees.job_title,
+    employees.salary,
+    employees.manager_id,
 
-FROM shops
-JOIN users
-    ON shops.user_id = users.id
-LEFT JOIN wines
-    ON shops.id = wines.shop_id
-LEFT JOIN users AS managers
-    ON users.manager_id = managers.id;
+    roles.id AS role_id,
+    roles.job_title AS role_job_title,
+    roles.salary AS role_salary
+
+FROM roles
+JOIN departments
+    ON roles.department_id = departments.id
+JOIN employees
+    ON roles.user_id = employees.id
+LEFT JOIN employees AS managers
+    ON employees.manager_id = managers.id;
