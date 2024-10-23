@@ -2,10 +2,7 @@ import client from '../config/connection.js';
 
 export async function getAllDepartments() {
     const sql = `
-        SELECT
-            departments.id AS department_id,
-            departments.name AS department_name
-        FROM departments;
+        SELECT id, name FROM departments;
     `;
 
     const { rows } = await client.query(sql);

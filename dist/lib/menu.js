@@ -12,6 +12,11 @@ export async function addDepartment() {
     await createDepartment(department_name);
 }
 export async function addRole() {
+    const departments = await getAllDepartments();
+    const departmentChoices = departments.map(department => ({
+        name: department.name,
+        value: department.id
+    }));
     const { job_title, department_id, salary } = await inquirer.prompt([
         {
             message: 'Enter the name of the role:',
@@ -26,7 +31,8 @@ export async function addRole() {
         {
             message: 'Enter the department for the role:',
             name: 'department_id',
-            type: 'input'
+            type: 'list',
+            choices: departmentChoices
         }
     ]);
     await createRole(job_title, department_id, salary);
