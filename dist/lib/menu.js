@@ -94,6 +94,10 @@ export async function showAllRoles() {
     const rolesRowsArray = await getAllRoles();
     console.table(rolesRowsArray);
 }
+export async function showAllEmployees() {
+    const employeeRowsArray = await getAllEmployees();
+    console.table(employeeRowsArray);
+}
 export async function showMainMenu() {
     if (!showWelcome) {
         console.log('Welcome to the Employee Info Tracker');
@@ -114,7 +118,7 @@ export async function showMainMenu() {
             },
             {
                 name: 'View all employees',
-                value: getAllEmployees,
+                value: showAllEmployees,
             },
             {
                 name: 'Add a role',
